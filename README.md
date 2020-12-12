@@ -1,4 +1,4 @@
-# G2Plot-Infographic
+# G2Plot Infographic for AntV * 2020 D2
 
 > G2Plot-Infographic: plugin based on G2Plot v2. [LIVE DEMO](https://me-momo.github.io/G2Plot-Infographic/)
 
