@@ -1,15 +1,15 @@
-# G2Plot-InfoGraphics
+# G2Plot-Infographic
 
-> G2Plot-InfoGraphics: plugin based on G2Plot v2. [LIVE DEMO](https://git.hust.cc/g2plot-infographics)
+> G2Plot-Infographic: plugin based on G2Plot v2. [LIVE DEMO](TODO)
 
-[![npm Version](https://img.shields.io/npm/v/g2plot-infographics.svg)](https://www.npmjs.com/package/g2plot-infographics)
-[![npm License](https://img.shields.io/npm/l/g2plot-infographics.svg)](https://www.npmjs.com/package/g2plot-infographics)
+[![npm Version](https://img.shields.io/npm/v/g2plot-infographic.svg)](https://www.npmjs.com/package/g2plot-infographic)
+[![npm License](https://img.shields.io/npm/l/g2plot-infographic.svg)](https://www.npmjs.com/package/g2plot-infographic)
 
 
 ## Install
 
 ```bash
-$ npm i --save g2plot-infographics
+$ npm i --save g2plot-infographic
 ```
 
 
@@ -19,32 +19,29 @@ $ npm i --save g2plot-infographics
 
 ```ts
 import { G2Plot } from '@antv/g2plot';
-import { adaptor, defaultOptions } from 'g2plot-infographics';
+import { adaptor, defaultOptions } from 'g2plot-infographic';
 
-const qr = new G2Plot('container', {
-  data: 'Hello, g2plot infographics!',
-  padding: 8,
-  width: 120,
-  height: 120,
-  backgroundColor: 'white',
-  foregroundColor: 'black',
-  typeNumber: 0,
-  correctLevel: 'H', // L M H Q
+const infographic = new G2Plot('container', {
+  centralText: {
+    content: 'Hi, AntV',
+    style: {
+      fontSize: 24
+    }
+  }
 }, adaptor, defaultOptions);
 
-qr.render();
+infographic.render();
 ```
 
  - update
 
 ```ts
-qr.update({
-  ...qr.options,
-  data: 'hello world!',
+infographic.update({
+  music: { type: 'metal' },
 });
 ```
 
 
 ## License
 
-MIT@[hustcc](https://github.com/hustcc).
+MIT@[me-momo](https://github.com/me-momo).

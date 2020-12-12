@@ -3,13 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
-    <title>G2Plot-InfoGraphics</title>
+    <title>Infographic for AntV * D2</title>
     <style>
       body {
         overflow: hidden;
         padding: 16px;
         font-size: 14px;
-        font-family: Avenir, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+        font-family: Avenir, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+          'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+          'Segoe UI Symbol', sans-serif;
       }
       .container {
         display: flex;
@@ -28,10 +30,10 @@
       .generator {
         padding: 0px;
       }
-      .generator [class*=selector] {
+      .generator [class*='selector'] {
         margin: 8px 0;
       }
-      .generator [class*=selector]>div:first-child {
+      .generator [class*='selector'] > div:first-child {
         margin-bottom: 4px;
       }
       .generator .editor-item,
@@ -55,7 +57,7 @@
     <div class="wrapper">
       <!-- header -->
       <div class="header">
-        <h2>G2Plot InfoGraphics</h2>
+        <h2>G2Plot Infographic for AntV * D2</h2>
       </div>
       <div class="container">
         <div class="generator">
@@ -93,15 +95,27 @@
       </div>
     </div>
     <script src="https://unpkg.com/@antv/g2plot@2"></script>
-    <script src="./dist/g2plot-infographics.min.js"></script>
+    <script src="./dist/g2plot-infographic.min.js"></script>
     <script>
       // 第一次默认渲染
-      var infographicsPlot = new G2Plot.P('container', {}, D2Chart.adaptor, D2Chart.defaultOptions);
+      var infographic = new G2Plot.P(
+        'container',
+        {
+          centralText: {
+            content: 'Hi, AntV',
+            style: {
+              fontSize: 24,
+            },
+          },
+        },
+        D2Infographic.adaptor,
+        D2Infographic.defaultOptions,
+      );
 
-      infographicsPlot.render();
+      infographic.render();
 
       function onChange(options) {
-        infographicsPlot.update(options);
+        infographic.update(options);
       }
 
       document.querySelectorAll('.editor-item').forEach((ele) =>
