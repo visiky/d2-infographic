@@ -1,8 +1,7 @@
 import { flow, Params } from '@antv/g2plot';
 import { deepAssign } from '@antv/g2plot/lib/utils';
 import { DAILY_SCHEDULE_COLOR, MUSIC_COLOR, THEME, FONT_FAMILY, WATERDROP_COLOR, WATERDROP_STROKE } from './contants';
-import { MORNING_DAILY_SCHEDULE } from './datas/dailySchedule';
-import { getMusicData, generateRandomAngle, generateRandomData } from './helpers';
+import { getMusicData, generateRandomAngle, generateRandomData, getDailyScheduleData } from './helpers';
 import { ChartOptions } from './types';
 import './shapes/breath-point';
 import './shapes/waterdrop';
@@ -19,7 +18,7 @@ export const defaultOptions: ChartOptions = {
   // 日常作息
   dailySchedule: {
     color: DAILY_SCHEDULE_COLOR,
-    data: MORNING_DAILY_SCHEDULE,
+    time: 'morning',
   },
   // 喜欢的音乐
   music: {
@@ -71,7 +70,7 @@ function theme(params: Params<ChartOptions>): Params<ChartOptions> {
 function dailySchedule(params: Params<ChartOptions>): Params<ChartOptions> {
   const { chart, options } = params;
 
-  const { data, color } = options.dailySchedule;
+  const { time, color } = options.dailySchedule;
   const themeStyles = THEME[options.theme].dark;
 
   // view1 条形图
@@ -82,7 +81,7 @@ function dailySchedule(params: Params<ChartOptions>): Params<ChartOptions> {
     cfg: { radius: 1, innerRadius /** 内环半径 */ },
   });
 
-  v1.data(data)
+  v1.data(getDailyScheduleData(time))
     .scale('x', { type: 'cat' })
     .scale('y', { min: 0 });
   v1.axis('x', false);

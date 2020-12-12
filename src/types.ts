@@ -6,8 +6,8 @@ export interface ChartOptions extends Omit<Options, 'data' | 'legend' | 'tooltip
 
   /** PART 1: 日常作息 daily schedule visualization */
   readonly dailySchedule: {
+    readonly time: 'morning' | 'afternoon' | 'dawn' | 'night' | 'midnight';
     readonly color: string[];
-    readonly data: Array<{ x: string; y: number; type: string }>;
   };
 
   /** PART 2: music visualization */
