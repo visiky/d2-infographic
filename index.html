@@ -7,7 +7,8 @@
     <style>
       body {
         overflow: hidden;
-        padding: 16px;
+        margin: 0;
+        padding: 16px 24px;
         font-size: 14px;
         font-family: Avenir, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
           'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
@@ -15,6 +16,18 @@
       }
       .container {
         display: flex;
+        justify-content: space-around;
+      }
+
+      .wrapper {
+        position: relative;
+      }
+      .footer {
+        position: absolute;
+        right: 16px;
+        top: -4px;
+        height: 50px;
+        width: 50px;
       }
 
       #container {
@@ -92,6 +105,16 @@
           </div>
         </div>
         <div id="container"></div>
+      </div>
+      <div class="footer">
+        <a href="https://github.com/Me-Momo/G2Plot-Infographic" target="blank">
+          <img
+            src="https://gw.alipayobjects.com/zos/antfincdn/vbqHKVOlIE/44ffd130-7f65-4643-adbe-9657c9c1a443.png"
+            alt="Github"
+            width="100%"
+            height="100%"
+          />
+        </a>
       </div>
     </div>
     <script src="https://unpkg.com/@antv/g2plot@2"></script>
