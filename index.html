@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
+    <title>G2Plot-InfoGraphics</title>
+    <style>
+      body {
+        overflow: hidden;
+        padding: 16px;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+      }
+
+      #container {
+        margin: 16px auto;
+        width: 420px;
+        height: 420px;
+      }
+
+      canvas {
+        border: 1px solid #999;
+      }
+
+      .generator {
+        padding: 8px;
+      }
+      .generator .editor-item,
+      .generator .framework-item {
+        width: 78px;
+        height: 28px;
+        border: 1px solid #ddd;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- header -->
+      <div class="header">
+        <h2>G2Plot InfoGraphics</h2>
+        <div class="generator">
+          <div class="editor-selector">
+            <div>选择你喜欢的编辑器</div>
+            <span class="editor-item" data-name="vscode"> vscode </span>
+            <span class="editor-item" data-name="vim"> vim </span>
+            <span class="editor-item" data-name="webstorm"> webstorm </span>
+            <span class="editor-item" data-name="atom"> atom </span>
+          </div>
+          <div class="framework-selector">
+            <div>选择你喜欢的前端框架</div>
+            <span class="framework-item" data-name="React"> React </span>
+            <span class="framework-item" data-name="Vue"> Vue </span>
+            <span class="framework-item" data-name="Angular"> Angular </span>
+            <span class="framework-item" data-name="Bymyself"> 我自己写 </span>
+          </div>
+        </div>
+        <div id="container"></div>
+      </div>
+    </div>
+    <script src="https://unpkg.com/@antv/g2plot@2"></script>
+    <script src="./dist/g2plot-infographics.min.js"></script>
+    <script>
+      // 第一次默认渲染
+      var infographicsPlot = new G2Plot.P('container', {}, D2Chart.adaptor, D2Chart.defaultOptions);
+
+      infographicsPlot.render();
+
+      function onChange(options) {
+        infographicsPlot.update(options);
+      }
+
+      document.querySelectorAll('.editor-item').forEach((ele) =>
+        ele.addEventListener('click', (e) => {
+          if (e.target && e.target.dataset['name']) {
+            onChange({ theme: e.target.dataset['name'] });
+          }
+        }),
+      );
+      document.querySelectorAll('.framework-item').forEach((ele) =>
+        ele.addEventListener('click', (e) => {
+          if (e.target && e.target.dataset['name']) {
+            onChange({ waterdrop: { selected: e.target.dataset['name'] } });
+          }
+        }),
+      );
+    </script>
+
+    <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- sorry for ad -->
+    <ins
+      class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-7292810486004926"
+      data-ad-slot="7806394673"
+      data-ad-format="auto"
+    ></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </body>
+</html>
