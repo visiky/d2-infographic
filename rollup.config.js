@@ -24,5 +24,8 @@ module.exports = [
       uglify(),
       size({}),
     ],
+    watch: {
+      include: 'src/**'
+    }
   },
 ];
