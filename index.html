@@ -7,20 +7,28 @@
     <style>
       body {
         overflow: hidden;
-        margin: 0;
-        padding: 16px 24px;
+        margin: 16px 24px;
+        height: calc(100vh - 32px);
+        width: calc(100vw - 48px);
         font-size: 14px;
         font-family: Avenir, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
           'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
           'Segoe UI Symbol', sans-serif;
       }
+      .wrapper {
+        height: 100%;
+        width: 100%;
+        position: relative;
+      }
+      .height {
+        height: 42px;
+      }
       .container {
         display: flex;
+        height: calc(100% - 42px - 50px);
+        max-height: 800px;
+        overflow: auto;
         justify-content: space-around;
-      }
-
-      .wrapper {
-        position: relative;
       }
       .footer {
         position: absolute;
@@ -30,19 +38,20 @@
         width: 50px;
       }
 
-      #container {
-        flex: 1;
-        margin: 16px auto;
-        height: 420px;
-      }
-
-      canvas {
-        border: 1px solid #999;
-      }
-
       .generator {
         padding: 0px;
+        width: 500px;
       }
+
+      #container {
+        width: calc(100% - 500px);
+        height: 100%;
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+      }
+
       .generator [class*='selector'] {
         margin: 8px 0;
       }
@@ -64,6 +73,9 @@
         white-space: nowrap;
         text-overflow: ellipsis;
       }
+      .generator [data-selected='true'] {
+        background-color: rgba(109, 94, 255, 0.25);
+      }
     </style>
   </head>
   <body>
@@ -76,14 +88,14 @@
         <div class="generator">
           <div class="editor-selector">
             <div>选择你喜欢的编辑器</div>
-            <span class="editor-item" data-name="vscode"> vscode </span>
+            <span class="editor-item" data-name="vscode" data-selected="true"> vscode </span>
             <span class="editor-item" data-name="vim"> vim </span>
             <span class="editor-item" data-name="webstorm"> webstorm </span>
             <span class="editor-item" data-name="atom"> atom </span>
           </div>
           <div class="efficient-time-selector">
             <div>工作效率最高的时间段</div>
-            <span class="time-item" data-name="morning"> 早上 </span>
+            <span class="time-item" data-name="morning" data-selected="true"> 早上 </span>
             <span class="time-item" data-name="afternoon"> 下午 </span>
             <span class="time-item" data-name="dawn"> 傍晚 </span>
             <span class="time-item" data-name="night"> 晚上 </span>
@@ -91,14 +103,14 @@
           </div>
           <div class="framework-selector">
             <div>选择你喜欢的前端框架</div>
-            <span class="framework-item" data-name="React"> React </span>
+            <span class="framework-item" data-name="React" data-selected="true"> React </span>
             <span class="framework-item" data-name="Vue"> Vue </span>
             <span class="framework-item" data-name="Angular"> Angular </span>
             <span class="framework-item" data-name="Bymyself"> 我自己写 </span>
           </div>
           <div class="music-selector">
             <div>选择工作时喜欢听的音乐</div>
-            <span class="music-item" data-name="classic">古典音乐</span>
+            <span class="music-item" data-name="classic" data-selected="true">古典音乐</span>
             <span class="music-item" data-name="metal">重金属音乐</span>
             <span class="music-item" data-name="electronic">电子迷幻音乐</span>
             <span class="music-item" data-name="pop">流行音乐</span>
@@ -119,7 +131,6 @@
     </div>
     <script src="https://unpkg.com/@antv/g2plot@2"></script>
     <script src="https://gw.alipayobjects.com/os/antfincdn/q5Nl%26oID7e/d2-infographic.min.js"></script>
-    <script src="./dist/d2-infographic.min.js"></script>
     <script>
       // 第一次默认渲染
       var infographic = new G2Plot.P(
@@ -142,49 +153,50 @@
         infographic.update(options);
       }
 
-      document.querySelectorAll('.editor-item').forEach((ele) =>
+      const editorItems = document.querySelectorAll('.editor-item');
+      editorItems.forEach((ele) =>
         ele.addEventListener('click', (e) => {
+          editorItems.forEach((item) => (item.dataset['selected'] = 'false'));
           if (e.target && e.target.dataset['name']) {
+            e.target.dataset['selected'] = 'true';
             onChange({ theme: e.target.dataset['name'] });
           }
         }),
       );
-      document.querySelectorAll('.time-item').forEach((ele) =>
+
+      const timeItems = document.querySelectorAll('.time-item');
+      timeItems.forEach((ele) =>
         ele.addEventListener('click', (e) => {
+          timeItems.forEach((item) => (item.dataset['selected'] = 'false'));
           const targetValue = e.target.dataset['name'];
           if (e.target && targetValue) {
-            console.log(targetValue);
+            e.target.dataset['selected'] = 'true';
             onChange({ dailySchedule: { time: targetValue } });
           }
         }),
       );
-      document.querySelectorAll('.framework-item').forEach((ele) =>
+
+      const frameworkItems = document.querySelectorAll('.framework-item');
+      frameworkItems.forEach((ele) =>
         ele.addEventListener('click', (e) => {
+          frameworkItems.forEach((item) => (item.dataset['selected'] = 'false'));
           if (e.target && e.target.dataset['name']) {
+            e.target.dataset['selected'] = 'true';
             onChange({ waterdrop: { selected: e.target.dataset['name'] } });
           }
         }),
       );
-      document.querySelectorAll('.music-item').forEach((ele) =>
+
+      const musicItems = document.querySelectorAll('.music-item');
+      musicItems.forEach((ele) =>
         ele.addEventListener('click', (e) => {
+          musicItems.forEach((item) => (item.dataset['selected'] = 'false'));
           if (e.target && e.target.dataset['name']) {
+            e.target.dataset['selected'] = 'true';
             onChange({ music: { type: e.target.dataset['name'] } });
           }
         }),
       );
-    </script>
-
-    <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <!-- sorry for ad -->
-    <ins
-      class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-7292810486004926"
-      data-ad-slot="7806394673"
-      data-ad-format="auto"
-    ></ins>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   </body>
 </html>

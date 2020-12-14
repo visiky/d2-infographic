@@ -1,7 +1,13 @@
 import { flow, Params } from '@antv/g2plot';
 import { deepAssign } from '@antv/g2plot/lib/utils';
 import { DAILY_SCHEDULE_COLOR, MUSIC_COLOR, THEME, FONT_FAMILY, WATERDROP_COLOR, WATERDROP_STROKE } from './contants';
-import { getMusicData, generateRandomAngle, generateRandomData, getDailyScheduleData } from './helpers';
+import {
+  getMusicData,
+  generateRandomAngle,
+  generateRandomData,
+  getDailyScheduleData,
+  getContainerSizeType,
+} from './helpers';
 import { ChartOptions } from './types';
 import './shapes/breath-point';
 import './shapes/waterdrop';
@@ -11,7 +17,7 @@ import './shapes/waterdrop';
  * @param options
  */
 export const defaultOptions: ChartOptions = {
-  height: 400,
+  height: 600,
   autoFit: true,
   // 主题：编辑器
   theme: 'vscode',
@@ -57,7 +63,7 @@ function chartAdaptor(params: Params<ChartOptions>): Params<ChartOptions> {
  */
 function theme(params: Params<ChartOptions>): Params<ChartOptions> {
   const { chart, options } = params;
-  const background = THEME[options.theme].dark.chartContainerBack;
+  const background = THEME[options.theme].dark.mainBack;
   chart.theme({ background });
 
   return params;
@@ -104,8 +110,7 @@ function dailySchedule(params: Params<ChartOptions>): Params<ChartOptions> {
       const idx = times.indexOf(time);
       return {
         fillOpacity: 0.45,
-        // fixme 一旦加上这个，就不能使用渐变色
-        //   lineCap: 'round',
+        lineCap: 'round',
         fill: color[idx !== -1 ? idx : 0],
       };
     });
@@ -116,33 +121,10 @@ function dailySchedule(params: Params<ChartOptions>): Params<ChartOptions> {
   v2.data([{ y: 1 }]);
   v2.interval()
     .position('1*y')
-    .style('', () => {
-      // if (favoriteIDE === 'vim') {
-      //   if (themeMode === 'light') {
-      //     return {
-      //       // DONE 🎉
-      //       shadowColor: 'rgba(63,58,53,0.45)',
-      //       shadowBlur: 60,
-      //     };
-      //   }
-      //   return {
-      //     // DONE 🎉
-      //     shadowColor: '#4AD8EA',
-      //     shadowBlur: 100,
-      //   };
-      // }
-      // if (favoriteIDE === 'webstorm') {
-      //   return {
-      //     // DONE 🎉
-      //     shadowColor: 'rgba(255,255,255,0.38)',
-      //     shadowBlur: 100,
-      //   };
-      // }
-      return {
-        // note: 不能设置 fill 为透明，否则 shadow 阴影失效
-        shadowColor: 'rgba(255,255,255,0.38)',
-        shadowBlur: 140,
-      };
+    .style({
+      // note: 不能设置 fill 为透明，否则 shadow 阴影失效
+      fill: themeStyles.mainBack,
+      ...(themeStyles.shadow || {}),
     });
 
   // view3 环形图 vis-donut
@@ -226,12 +208,13 @@ function dailySchedule(params: Params<ChartOptions>): Params<ChartOptions> {
       end: { x: 1 - startX, y: 1 - startX },
     },
   });
-  v5.data([
+  const timeTickData = [
     { x: '0:00', y: 1 },
     { x: '6:00', y: 1 },
     { x: '12:00', y: 1 },
     { x: '18:00', y: 1 },
-  ]);
+  ];
+  v5.data(timeTickData);
   v5.coordinate({
     type: 'polar',
     cfg: { radius: 1 },
@@ -261,19 +244,19 @@ function dailySchedule(params: Params<ChartOptions>): Params<ChartOptions> {
             },
           },
         };
-
-        if (x === '0:00') {
+        const dataIdx = timeTickData.map((d) => d.x).indexOf(x);
+        if (dataIdx === 0) {
           cfg.style.textBaseline = 'bottom';
         }
-        if (x === '6:00') {
+        if (dataIdx === 1 /* in-right */) {
           cfg.style.textAlign = 'left';
           cfg.offsetX = 4;
         }
-        if (x === '12:00') {
+        if (dataIdx === 2) {
           cfg.style.textBaseline = 'top';
           cfg.offsetY = 4;
         }
-        if (x === '18:00') {
+        if (dataIdx === 3 /* in-left */) {
           cfg.style.textAlign = 'right';
           cfg.offsetX = -4;
         }
@@ -427,8 +410,7 @@ function waterdrop(params: Params<ChartOptions>): Params<ChartOptions> {
   });
   v1.axis(false);
   v1.data(generateRandomData(waterdrop.selected));
-  const interval = v1
-    .interval()
+  v1.interval()
     .position('x*y')
     .color('x', (x) => {
       return WATERDROP_COLOR[x];
@@ -444,7 +426,6 @@ function waterdrop(params: Params<ChartOptions>): Params<ChartOptions> {
           content: selected ? (x === 'Bymyself' ? 'My lib' : x) : ' ',
           offset: '-45%',
           style: {
-            // fill: themeMode === 'light' ? theme.textColor : theme.backgroundColor,
             fill: themeStyles.mainBack,
             fontSize: 10,
             fontFamily: FONT_FAMILY,
@@ -453,20 +434,17 @@ function waterdrop(params: Params<ChartOptions>): Params<ChartOptions> {
       },
     })
     .size('', () => {
-      // todo 判断小设备
-      // if (width280) {
-      //   return 22;
-      // }
-      return 35;
+      const d = v1.getCoordinate().getRadius() * 2;
+      return (d * Math.PI) / 18;
     })
     .shape('waterdrop')
     .style('x', (x) => {
       const framework = waterdrop.selected;
       const selected = framework === x || (framework === 'Bymyself' && x === 'Bymyself');
+      const containerType = getContainerSizeType(v1);
       return {
         fillOpacity: selected ? 1 : 0.65,
-        // lineWidth: selected ? (width280 ? 1.2 : 1.5) : 0,
-        lineWidth: selected ? 1.5 : 0,
+        lineWidth: selected ? (containerType === 'small' ? 1.2 : containerType === 'large' ? 2 : 1.5) : 0,
         stroke: WATERDROP_STROKE[x],
       };
     });

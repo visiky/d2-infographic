@@ -79,3 +79,27 @@ export function generateRandomData(framework: 'React' | 'Bymyself' | 'Vue' | 'An
 
   return FrameworkData;
 }
+
+/**
+ * 判断 chart 容器大小，返回设备大小类型
+ */
+export function getContainerSizeType(view) {
+  const coordinate = view.getCoordinate();
+  let d = coordinate.isPolar ? coordinate.getRadius() * 2 : 0;
+  if (!d) {
+    const width = coordinate.getWidth();
+    const height = coordinate.getHeight();
+    d = Math.min(width, height);
+  }
+
+  if (d < 280) {
+    return 'small';
+  }
+  if (d < 400) {
+    return 'medium';
+  }
+  if (d > 640) {
+    return 'large';
+  }
+  return 'normal';
+}

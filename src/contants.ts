@@ -16,14 +16,14 @@ export const WATERDROP_COLOR = {
   Bymyself: '#C2C8D5',
   Vue: '#3FB37F',
   Angular: '#BC052B',
-}
+};
 
 export const WATERDROP_STROKE = {
   React: 'rgba(94,211,243,0.5)',
   Angular: 'rgba(215,2,47,0.5)',
   Vue: 'rgba(63,179,127,0.5)',
   Bymyself: 'rgba(194,200,213,0.5)',
-}
+};
 
 const darkTipColor = 'rgba(255, 255, 255, 0.45)';
 const lightTipColor = 'rgba(0, 0, 0, 0.45)';
@@ -32,65 +32,77 @@ export const THEME = {
   webstorm: {
     light: {
       mainBack: '#F9FAFB',
-      chartContainerBack: '#F1F2F3',
       mainText: '#2B2C2D',
       subText: '#72124F',
       tipText: lightTipColor,
     },
     dark: {
       mainBack: '#292B2C',
-      chartContainerBack: '#3B4041',
       mainText: '#fff',
       subText: '#FFD576',
       tipText: darkTipColor,
+      shadow: {
+        fillOpacity: 1,
+        shadowColor: 'rgba(255,255,255,0.38)',
+        shadowBlur: 100,
+      },
     },
   },
   vscode: {
     light: {
       mainBack: '#FEFFFF',
-      chartContainerBack: '#EBECED',
       mainText: '#2B2C2D',
       subText: '#6D2453',
       tipText: lightTipColor,
     },
     dark: {
       mainBack: '#202122',
-      chartContainerBack: '#242830',
       mainText: '#fff',
       subText: '#1F96F3',
       tipText: darkTipColor,
+      shadow: {
+        fillOpacity: 1,
+        shadowColor: 'rgba(255,255,255,0.38)',
+        shadowBlur: 140,
+      },
     },
   },
   vim: {
     light: {
       mainBack: '#F0EBD8',
-      chartContainerBack: '#D2CAB7',
       mainText: '#403A33',
       subText: '#B2286D',
       tipText: lightTipColor,
     },
     dark: {
       mainBack: '#002D37',
-      chartContainerBack: '#00181E',
       mainText: '#4FD6E9',
       subText: '#FFBB22',
       tipText: darkTipColor,
+      shadow: {
+        fillOpacity: 0.45,
+        shadowColor: '#4AD8EA',
+        shadowBlur: 100,
+      },
     },
   },
   atom: {
     light: {
       mainBack: '#F9FAFB',
-      chartContainerBack: '#E9EAEC',
       mainText: '#252426',
       subText: '#AA3FAA',
       tipText: lightTipColor,
     },
     dark: {
       mainBack: '#262D36',
-      chartContainerBack: '#323842',
       mainText: '#fff',
       subText: '#31CFD3',
       tipText: darkTipColor,
+      shadow: {
+        fillOpacity: 1,
+        shadowColor: 'rgba(255,255,255,0.38)',
+        shadowBlur: 140,
+      },
     },
   },
 };
