@@ -1,4 +1,4 @@
-# D2-Infographic
+# D2-Infographic for AntV * 2020 D2
 
 > Infographic for D2 games, based on G2Plot v2. [LIVE DEMO](https://me-momo.github.io/d2-infographic/)
 
