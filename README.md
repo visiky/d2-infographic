@@ -1,15 +1,15 @@
-# G2Plot-Infographic
+# D2-Infographic
 
-> G2Plot-Infographic: plugin based on G2Plot v2. [LIVE DEMO](https://me-momo.github.io/G2Plot-Infographic/)
+> Infographic for D2 games, based on G2Plot v2. [LIVE DEMO](https://me-momo.github.io/d2-infographic/)
 
-[![npm Version](https://img.shields.io/npm/v/g2plot-infographic.svg)](https://www.npmjs.com/package/g2plot-infographic)
-[![npm License](https://img.shields.io/npm/l/g2plot-infographic.svg)](https://www.npmjs.com/package/g2plot-infographic)
+[![npm Version](https://img.shields.io/npm/v/d2-infographic.svg)](https://www.npmjs.com/package/d2-infographic)
+[![npm License](https://img.shields.io/npm/l/d2-infographic.svg)](https://www.npmjs.com/package/d2-infographic)
 
 
 ## Install
 
 ```bash
-$ npm i --save g2plot-infographic
+$ npm i --save d2-infographic
 ```
 
 
@@ -19,7 +19,7 @@ $ npm i --save g2plot-infographic
 
 ```ts
 import { G2Plot } from '@antv/g2plot';
-import { adaptor, defaultOptions } from 'g2plot-infographic';
+import { adaptor, defaultOptions } from 'd2-infographic';
 
 const infographic = new G2Plot('container', {
   centralText: {

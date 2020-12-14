@@ -1,12 +1,12 @@
 {
-  "name": "g2plot-infographic",
+  "name": "d2-infographic",
   "version": "1.0.0",
-  "description": "Infographic of D2 Games, based on Ant/G2Plot.",
+  "description": "Infographic for D2 Games, based on Ant/G2Plot.",
   "license": "MIT",
   "author": "kasmine",
   "main": "lib/index.js",
   "module": "esm/index.js",
-  "unpkg": "dist/g2plot-infographic.min.js",
+  "unpkg": "dist/d2-infographic.min.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib",

@@ -7,7 +7,7 @@ import commonjs from '@rollup/plugin-commonjs'
 module.exports = [{
   input: 'src/index.ts',
   output: {
-    file: 'dist/g2plot-infographic.min.js',
+    file: 'dist/d2-infographic.min.js',
     name: 'D2Infographic',
     format: 'umd',
     sourcemap: false,
