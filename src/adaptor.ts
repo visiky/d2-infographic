@@ -7,6 +7,7 @@ import {
   generateRandomData,
   getDailyScheduleData,
   getContainerSizeType,
+  keyBy,
 } from './helpers';
 import { ChartOptions } from './types';
 import './shapes/breath-point';
@@ -296,48 +297,22 @@ function music(params: Params<ChartOptions>): Params<ChartOptions> {
     .position('x*y')
     .color('type', music.color)
     .style('type', (type) => {
-      // todo 完善
+      const types = Object.keys(keyBy(musicData, (d) => d.type));
       const cfg: any = { lineWidth: 0.8, strokeOpacity: 0.3 };
+      const typeIdx = types.indexOf(type);
       // 倒数第一条 0.3 透明度，倒数第二条 0.5 透明度, 依次 0.8, 0.9
-      if (['Soprano', 'Electric_guitar', 'Amplifier_1', 'Lead_guitar'].indexOf(type) !== -1) {
-        // done 🎉
+      if (types.length - typeIdx === 1) {
+        cfg.strokeOpacity = 0.3;
+      } else if (types.length - typeIdx === 2) {
+        cfg.strokeOpacity = 0.5;
+      } else if (typeIdx === 2) {
+        cfg.strokeOpacity = 0.8;
+      } else if (typeIdx === 1) {
+        cfg.strokeOpacity = 0.9;
+      } else if (typeIdx === 0) {
         cfg.strokeOpacity = 1;
       }
-      if (type === 'Drum') {
-        // done 🎉
-        cfg.strokeOpacity = 0.9;
-      }
-      if (['Alto', 'Electri_bass'].indexOf(type) !== -1) {
-        // done 🎉
-        cfg.strokeOpacity = 0.8;
-      }
-      if (type === 'Amplifier_2') {
-        // done 🎉
-        cfg.strokeOpacity = 0.5;
-      }
-      if (type === 'Amplifier') {
-        // done 🎉
-        cfg.strokeOpacity = 0.5;
-      }
-      // done 🎉
-      if (music.type === 'classic' && type === 'Tenor') {
-        cfg.strokeOpacity = 0.5;
-      }
-      if (music.type === 'metal' && type === 'Keyboard') {
-        cfg.strokeOpacity = 0.5;
-      }
-      // done 🎉
-      if (music.type === 'pop') {
-        if (type === 'Keyboard') {
-          cfg.strokeOpacity = 0.8;
-        }
-      }
-      if (music.type === 'electronic' && type === 'Keyboard') {
-        cfg.strokeOpacity = 0.5;
-      }
-      if (music.type === 'electronic' && type === 'Drum') {
-        cfg.strokeOpacity = 0.3;
-      }
+
       return cfg;
     })
     .shape('type', (type) => {

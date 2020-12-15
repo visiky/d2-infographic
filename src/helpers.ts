@@ -103,3 +103,32 @@ export function getContainerSizeType(view) {
   }
   return 'normal';
 }
+
+function baseAssignValue(object, key, value) {
+  if (key == '__proto__') {
+    Object.defineProperty(object, key, {
+      configurable: true,
+      enumerable: true,
+      value: value,
+      writable: true,
+    });
+  } else {
+    object[key] = value;
+  }
+}
+
+/**
+ * @description like lodash.keyBy
+ * @example
+ *
+ * const array = [
+ *   { 'dir': 'left', 'code': 97 },
+ *   { 'dir': 'right', 'code': 100 }
+ * ]
+ *
+ * keyBy(array, ({ code }) => String.fromCharCode(code))
+ * // => { 'a': { 'dir': 'left', 'code': 97 }, 'd': { 'dir': 'right', 'code': 100 } }
+ */
+export function keyBy(array: object[], iteratee: Function) {
+  return array.reduce((result, value) => (baseAssignValue(result, iteratee(value), value), result), {});
+}
