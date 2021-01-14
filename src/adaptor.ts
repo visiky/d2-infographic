@@ -186,19 +186,14 @@ function dailySchedule(params: Params<ChartOptions>): Params<ChartOptions> {
   v4.interval()
     .position('1*y')
     .style({ fill: themeStyles.mainBack });
-  v4.annotation().text({
-    position: ['16%', '70%'],
-    content: 'Daily\nSchedule',
-    // fixme 不知道为啥不居中
-    // offsetY: (theme.dailySchedule.annotations[0].fontSize / 9) * (width280 ? 0.6 : 1),
-    style: {
-      textAlign: 'left',
-      textBaseline: 'middle',
-      fontWeight: 700,
-      // fontSize: theme.dailySchedule.annotations[0].fontSize * (width280 ? 0.6 : 1),
-      // lineHeight: theme.dailySchedule.annotations[0].fontSize * (width280 ? 0.6 : 1),
-      fill: themeStyles.subText,
-      fontFamily: FONT_FAMILY,
+
+  v4.annotation().html({
+    position: ['50%', '50%'],
+    html: (container, view) => {
+      const offsetX = -(v4.getCoordinate()?.getRadius() + 50 || 210);
+      const offsetY = v4.getCoordinate()?.getRadius() * 0.55;
+      container.style.position = 'relative';
+      return `<div style="font-family:${FONT_FAMILY};color:${themeStyles.subText};font-weight:700;position:absolute;left:${offsetX}px;top:${offsetY}px;"><div style="text-align:right;">Daily</div><div style="text-align:right;">Schedule</div></div>`;
     },
   });
 
@@ -350,16 +345,14 @@ function music(params: Params<ChartOptions>): Params<ChartOptions> {
     });
 
   const themeStyles = THEME[options.theme].dark;
-  v1.annotation().text({
-    content: 'Music',
-    position: ['78%', '32%'],
-    // offset: 20,
+  v1.annotation().html({
+    position: ['50%', '0%'],
     offsetX: -8,
-    style: {
-      fill: themeStyles.subText,
-      fontSize: 10,
-      fontFamily: FONT_FAMILY,
-      fontWeight: 700,
+    html: (container) => {
+      const offsetX = v1.getCoordinate()?.getRadius() * 0.7;
+      const offsetY = v1.getCoordinate()?.getRadius();
+      container.style.position = 'relative';
+      return `<div style="font-family:${FONT_FAMILY};color:${themeStyles.subText};font-weight:700;font-size:10;position:absolute;left:${offsetX}px;top:${offsetY}px;">Music</div>`;
     },
   });
   return params;
