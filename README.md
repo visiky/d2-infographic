@@ -12,7 +12,7 @@
 
 ## Online Game
 
-<img src="https://gw.alipayobjects.com/zos/antfincdn/sfyKghJ1Zu/b0c10ad3-14f1-4d3a-97bb-23405654895f.png" width="414" height=357"" />
+<img src="https://gw.alipayobjects.com/zos/antfincdn/sfyKghJ1Zu/b0c10ad3-14f1-4d3a-97bb-23405654895f.png" width="414" height="357" />
 
 
 ## Install
